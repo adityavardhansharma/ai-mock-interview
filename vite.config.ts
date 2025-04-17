@@ -15,11 +15,6 @@ export default defineConfig({
     // Skip TypeScript type checking
     reportCompressedSize: false,
     target: 'esnext',
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-      },
-    },
+    minify: 'esbuild',
   },
 });
