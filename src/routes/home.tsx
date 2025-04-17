@@ -1,119 +1,115 @@
-import { Sparkles } from "lucide-react";
-import Marquee from "react-fast-marquee";
-
+import { Sparkles, History, FileText, Star, Zap } from "lucide-react";
 import { Container } from "@/components/container";
 import { Button } from "@/components/ui/button";
-import { MarqueImg } from "@/components/marquee-img";
 import { Link } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const HomePage = () => {
   return (
-    <div className="flex-col w-full pb-24">
-      <Container>
-        <div className="my-8">
-          <h2 className="text-3xl text-center md:text-left md:text-6xl">
-            <span className=" text-outline font-extrabold md:text-8xl">
-              AI Superpower
-            </span>
-            <span className="text-gray-500 font-extrabold">
-              - A better way to
-            </span>
-            <br />
-            improve your interview chances and skills
-          </h2>
-
-          <p className="mt-4 text-muted-foreground text-sm">
-            Boost your interview skills and increase your success rate with
-            AI-driven insights. Discover a smarter way to prepare, practice, and
-            stand out.
-          </p>
-        </div>
-
-        <div className="flex w-full items-center justify-evenly md:px-12 md:py-16 md:items-center md:justify-end gap-12">
-          <p className="text-3xl font-semibold text-gray-900 text-center">
-            250k+
-            <span className="block text-xl text-muted-foreground font-normal">
-              Offers Recieved
-            </span>
-          </p>
-          <p className="text-3xl font-semibold text-gray-900 text-center">
-            1.2M+
-            <span className="block text-xl text-muted-foreground font-normal">
-              Interview Aced
-            </span>
-          </p>
-        </div>
-
-        {/* image section */}
-        <div className="w-full mt-4 rounded-xl bg-gray-100 h-[420px] drop-shadow-md overflow-hidden relative">
-          <img
-            src="/assets/img/hero.jpg"
-            alt=""
-            className="w-full h-full object-cover"
-          />
-
-          <div className="absolute top-4 left-4 px-4 py-2 rounded-md bg-white/40 backdrop-blur-md">
-            Inteviews Copilot&copy;
-          </div>
-
-          <div className="hidden md:block absolute w-80 bottom-4 right-4 px-4 py-2 rounded-md bg-white/60 backdrop-blur-md">
-            <h2 className="text-neutral-800 font-semibold">Developer</h2>
-            <p className="text-sm text-neutral-500">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-              distinctio natus, quos voluptatibus magni sapiente.
+    <div className="flex flex-col w-full">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-b from-blue-50 to-white py-8 pb-2">
+        <Container>
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <Badge variant="outline" className="px-4 py-1 border-blue-300 bg-blue-50 text-blue-700">
+              <Sparkles className="h-3.5 w-3.5 mr-1" />
+              Powered By TrailBot
+            </Badge>
+            
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-blue-900 leading-tight">
+              AI <span className="text-blue-600">MOCK</span> INTERVIEW
+            </h1>
+            
+            <p className="text-lg text-blue-700/80 max-w-2xl mx-auto mb-4">
+              Prepare for your dream job with AI-powered mock interviews. Get real-time feedback and improve your interview skills.
             </p>
-
-            <Button className="mt-3">
-              Generate <Sparkles />
-            </Button>
-          </div>
-        </div>
-      </Container>
-
-      {/* marquee section */}
-      <div className=" w-full my-12">
-        <Marquee pauseOnHover>
-          <MarqueImg img="/assets/img/logo/firebase.png" />
-          <MarqueImg img="/assets/img/logo/meet.png" />
-          <MarqueImg img="/assets/img/logo/zoom.png" />
-          <MarqueImg img="/assets/img/logo/firebase.png" />
-          <MarqueImg img="/assets/img/logo/microsoft.png" />
-          <MarqueImg img="/assets/img/logo/meet.png" />
-          <MarqueImg img="/assets/img/logo/tailwindcss.png" />
-          <MarqueImg img="/assets/img/logo/microsoft.png" />
-        </Marquee>
-      </div>
-
-      <Container className="py-8 space-y-8">
-        <h2 className="tracking-wide text-xl text-gray-800 font-semibold">
-          Unleash your potential with personalized AI insights and targeted
-          interview practice.
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-          <div className="col-span-1 md:col-span-3">
-            <img
-              src="/assets/img/office.jpg"
-              alt=""
-              className="w-full max-h-96 rounded-md object-cover"
-            />
-          </div>
-
-          <div className="col-span-1 md:col-span-2 gap-8 max-h-96 min-h-96 w-full flex flex-col items-center justify-center text-center">
-            <p className="text-center text-muted-foreground">
-              Transform the way you prepare, gain confidence, and boost your
-              chances of landing your dream job. Let AI be your edge in
-              today&apos;s competitive job market.
-            </p>
-
-            <Link to={"/generate"} className="w-full">
-              <Button className="w-3/4">
-                Generate <Sparkles className="ml-2" />
+            
+            <Link to="/generate">
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 rounded-md mt-6 mb-3">
+                Get Started
+                <Zap className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </section>
+      
+      {/* Features Section - No gap between hero and features */}
+      <section className="py-8 pt-2 bg-white">
+        <Container>
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold text-blue-900">
+              Boost Your Interview Confidence
+            </h2>
+            <p className="text-blue-700/70 mt-2">
+              Everything you need to ace your next interview
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Feature 1 */}
+            <Card className="border border-blue-100 shadow-sm hover:shadow-md transition-all duration-300">
+              <CardHeader className="pb-2">
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                  <History className="h-6 w-6 text-blue-600" />
+                </div>
+                <CardTitle className="text-blue-900">Interview History</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-blue-700/70">
+                  Keep track of all your previous mock interviews and review your progress over time.
+                </CardDescription>
+              </CardContent>
+            </Card>
+            
+            {/* Feature 2 */}
+            <Card className="border border-blue-100 shadow-sm hover:shadow-md transition-all duration-300">
+              <CardHeader className="pb-2">
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                  <FileText className="h-6 w-6 text-blue-600" />
+                </div>
+                <CardTitle className="text-blue-900">Customizable</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-blue-700/70">
+                  Tailor interviews to your specific job description and role requirements.
+                </CardDescription>
+              </CardContent>
+            </Card>
+            
+            {/* Feature 3 */}
+            <Card className="border border-blue-100 shadow-sm hover:shadow-md transition-all duration-300">
+              <CardHeader className="pb-2">
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                  <Sparkles className="h-6 w-6 text-blue-600" />
+                </div>
+                <CardTitle className="text-blue-900">Free Tier</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-blue-700/70">
+                  Start with 5 free interviews to experience the platform before committing.
+                </CardDescription>
+              </CardContent>
+            </Card>
+            
+            {/* Feature 4 */}
+            <Card className="border border-blue-100 shadow-sm hover:shadow-md transition-all duration-300">
+              <CardHeader className="pb-2">
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                  <Star className="h-6 w-6 text-blue-600" />
+                </div>
+                <CardTitle className="text-blue-900">Detailed Feedback</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-blue-700/70">
+                  Receive comprehensive feedback to help you improve and nail your real interviews.
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </div>
+        </Container>
+      </section>
     </div>
   );
 };

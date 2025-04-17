@@ -1,53 +1,40 @@
-import { cn } from "@/lib/utils";
-import { useAuth } from "@clerk/clerk-react";
-import { Container } from "./container";
-import { LogoContainer } from "./logo-container";
-import { NavigationRoutes } from "./navigation-routes";
-import { NavLink } from "react-router-dom";
-import { ProfileContainer } from "./profile-container";
-import { ToggleContainer } from "./toggle-container";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
 
-const Header = () => {
-  const { userId } = useAuth();
-
+export const Header = () => {
   return (
-    <header
-      className={cn("w-full border-b duration-150 transition-all ease-in-out")}
-    >
-      <Container>
-        <div className="flex items-center gap-4 w-full">
-          {/* logo section */}
-          <LogoContainer />
-
-          {/* navigation section */}
-          <nav className="hidden md:flex items-center gap-3">
-            <NavigationRoutes />
-            {userId && (
-              <NavLink
-                to={"/generate"}
-                className={({ isActive }) =>
-                  cn(
-                    "text-base text-neutral-600",
-                    isActive && "text-neutral-900 font-semibold"
-                  )
-                }
-              >
-                Take An Interview
-              </NavLink>
-            )}
-          </nav>
-
-          <div className="ml-auto flex items-center gap-6">
-            {/* profile section */}
-            <ProfileContainer />
-
-            {/* mobile toggle section */}
-            <ToggleContainer />
-          </div>
+    <header className="border-b border-blue-100 bg-white">
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center">
+          <Link to="/">
+            <h1 className="text-xl font-bold text-blue-700 hover:text-blue-800 transition-colors cursor-pointer">
+              Talent Trail
+            </h1>
+          </Link>
         </div>
-      </Container>
+
+        <div className="flex items-center space-x-4">
+          <SignedIn>
+            <div className="flex items-center gap-4">
+              <Link to="/generate">
+                <Button variant="ghost" className="text-blue-700 hover:text-blue-800 hover:bg-blue-50">
+                  Dashboard
+                </Button>
+              </Link>
+              <UserButton afterSignOutUrl="/" />
+            </div>
+          </SignedIn>
+          
+          <SignedOut>
+            <SignInButton mode="modal">
+              <Button variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-50">
+                Sign In
+              </Button>
+            </SignInButton>
+          </SignedOut>
+        </div>
+      </div>
     </header>
   );
 };
-
-export default Header;
