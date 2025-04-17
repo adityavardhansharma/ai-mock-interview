@@ -9,14 +9,14 @@ import { Loader } from "lucide-react";
 
 // assuming the button variants types are something like following
 type ButtonVariant =
-  | "ghost"
-  | "link"
-  | "default"
-  | "destructive"
-  | "outline"
-  | "secondary"
-  | null
-  | undefined;
+    | "ghost"
+    | "link"
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | null
+    | undefined;
 
 interface TooltipButtonProps {
   content: string;
@@ -25,44 +25,44 @@ interface TooltipButtonProps {
   buttonVariant?: ButtonVariant;
   buttonClassName?: string;
   delay?: number;
-  disbaled?: boolean;
+  disabled?: boolean;
   loading?: boolean;
 }
 
 export const TooltipButton = ({
-  content,
-  icon,
-  onClick,
-  buttonVariant = "ghost",
-  buttonClassName = "",
-  delay = 0,
-  disbaled = false,
-  loading = false,
-}: TooltipButtonProps) => {
+                                content,
+                                icon,
+                                onClick,
+                                buttonVariant = "ghost",
+                                buttonClassName = "",
+                                delay = 0,
+                                disabled = false,
+                                loading = false,
+                              }: TooltipButtonProps) => {
   return (
-    <TooltipProvider delayDuration={delay}>
-      <Tooltip>
-        <TooltipTrigger
-          className={disbaled ? "cursor-not-allowed" : "cursor-pointer"}
-        >
-          <Button
-            size={"icon"}
-            disabled={disbaled}
-            variant={buttonVariant}
-            className={buttonClassName}
-            onClick={onClick}
+      <TooltipProvider delayDuration={delay}>
+        <Tooltip>
+          <TooltipTrigger
+              asChild
+              disabled={disabled}
           >
-            {loading ? (
-              <Loader className="min-w-4 min-h-4 animate-spin text-emerald-400" />
-            ) : (
-              icon
-            )}
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{loading ? "Loading..." : content}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+            <Button
+                size={"icon"}
+                variant={buttonVariant}
+                className={buttonClassName}
+                onClick={onClick}
+            >
+              {loading ? (
+                  <Loader className="min-w-4 min-h-4 animate-spin text-emerald-400" />
+              ) :(
+                  icon
+              )}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{loading ? "Loading..." : content}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
   );
 };
