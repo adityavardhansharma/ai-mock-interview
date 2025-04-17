@@ -1,0 +1,6 @@
+{
+  "buildCommand": "tsc --noEmit false --skipLibCheck && vite build",
+  "framework": "vite",
+  "installCommand": "pnpm install",
+  "outputDirectory": "dist"
+} 
