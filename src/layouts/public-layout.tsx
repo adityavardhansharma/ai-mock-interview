@@ -1,18 +1,19 @@
-import { Footer } from "@/components/footer";
-import Header from "@/components/header";
-import AuthHanlder from "@/handlers/auth-handler";
+import { Header } from "@/components/header";
+import AuthHandler from "@/handlers/auth-handler";
 import { Outlet } from "react-router-dom";
 
 export const PublicLayout = () => {
   return (
-    <div className="w-full">
+    <div className="w-full min-h-screen flex flex-col">
       {/* handler to store the user data */}
-      <AuthHanlder />
+      <AuthHandler />
+      
+      {/* Add Header to appear on all pages */}
       <Header />
-
-      <Outlet />
-
-      <Footer />
+      
+      <main className="flex-1">
+        <Outlet />
+      </main>
     </div>
   );
 };
