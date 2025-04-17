@@ -20,7 +20,7 @@ createRoot(document.getElementById("root")!).render(
     <ClerkProvider 
       publishableKey={PUBLISHABLE_KEY} 
       afterSignOutUrl="/"
-      appearance={clerkAppearance}
+      appearance={clerkAppearance as any}
     >
       <App />
       <ToasterProvider />

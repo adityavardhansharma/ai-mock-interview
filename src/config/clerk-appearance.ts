@@ -37,7 +37,7 @@ export const clerkAppearance = {
     pageBackground: 'bg-gradient-to-b from-blue-50 to-white',
   },
   layout: {
-    socialButtonsVariant: 'iconButton',
+    socialButtonsVariant: "iconButton" as "iconButton" | "blockButton" | "auto",
     socialButtonsPlacement: 'bottom',
     showOptionalFields: false,
     shimmer: false,
