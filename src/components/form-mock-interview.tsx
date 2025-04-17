@@ -9,10 +9,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 import { toast } from "sonner";
-import { Headings } from "./headings";
 import { Button } from "./ui/button";
-import { Loader, Trash2 } from "lucide-react";
-import { Separator } from "./ui/separator";
+import { BrainCircuit, Loader, Sparkles, Trash2 } from "lucide-react";
 import {
   FormControl,
   FormField,
@@ -31,6 +29,8 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Badge } from "./ui/badge";
 
 interface FormMockInterviewProps {
   initialData: Interview | null;
@@ -63,13 +63,13 @@ export const FormMockInterview = ({ initialData }: FormMockInterviewProps) => {
 
   const title = initialData
     ? initialData.position
-    : "Create a new mock interview";
+    : "Create a new interview";
 
   const breadCrumpPage = initialData ? initialData?.position : "Create";
-  const actions = initialData ? "Save Changes" : "Create";
+  const actions = initialData ? "Save Changes" : "Create Interview";
   const toastMessage = initialData
-    ? { title: "Updated..!", description: "Changes saved successfully..." }
-    : { title: "Created..!", description: "New Mock Interview created..." };
+    ? { title: "Updated!", description: "Changes saved successfully." }
+    : { title: "Created!", description: "New mock interview created." };
 
   const cleanAiResponse = (responseText: string) => {
     // Step 1: Trim any surrounding whitespace
@@ -153,7 +153,7 @@ export const FormMockInterview = ({ initialData }: FormMockInterviewProps) => {
       navigate("/generate", { replace: true });
     } catch (error) {
       console.log(error);
-      toast.error("Error..", {
+      toast.error("Error", {
         description: `Something went wrong. Please try again later`,
       });
     } finally {
@@ -173,143 +173,176 @@ export const FormMockInterview = ({ initialData }: FormMockInterviewProps) => {
   }, [initialData, form]);
 
   return (
-    <div className="w-full flex-col space-y-4">
+    <div className="w-full space-y-6">
       <CustomBreadCrumb
         breadCrumbPage={breadCrumpPage}
         breadCrumpItems={[{ label: "Mock Interviews", link: "/generate" }]}
       />
 
-      <div className="mt-4 flex items-center justify-between w-full">
-        <Headings title={title} isSubHeading />
-
-        {initialData && (
-          <Button size={"icon"} variant={"ghost"}>
-            <Trash2 className="min-w-4 min-h-4 text-red-500" />
-          </Button>
-        )}
-      </div>
-
-      <Separator className="my-4" />
-
-      <div className="my-6"></div>
-
-      <FormProvider {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full p-8 rounded-lg flex-col flex items-start justify-start gap-6 shadow-md "
-        >
-          <FormField
-            control={form.control}
-            name="position"
-            render={({ field }) => (
-              <FormItem className="w-full space-y-4">
-                <div className="w-full flex items-center justify-between">
-                  <FormLabel>Job Role / Job Position</FormLabel>
-                  <FormMessage className="text-sm" />
-                </div>
-                <FormControl>
-                  <Input
-                    className="h-12"
-                    disabled={loading}
-                    placeholder="eg:- Full Stack Developer"
-                    {...field}
-                    value={field.value || ""}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem className="w-full space-y-4">
-                <div className="w-full flex items-center justify-between">
-                  <FormLabel>Job Description</FormLabel>
-                  <FormMessage className="text-sm" />
-                </div>
-                <FormControl>
-                  <Textarea
-                    className="h-12"
-                    disabled={loading}
-                    placeholder="eg:- describle your job role"
-                    {...field}
-                    value={field.value || ""}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="experience"
-            render={({ field }) => (
-              <FormItem className="w-full space-y-4">
-                <div className="w-full flex items-center justify-between">
-                  <FormLabel>Years of Experience</FormLabel>
-                  <FormMessage className="text-sm" />
-                </div>
-                <FormControl>
-                  <Input
-                    type="number"
-                    className="h-12"
-                    disabled={loading}
-                    placeholder="eg:- 5 Years"
-                    {...field}
-                    value={field.value || ""}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="techStack"
-            render={({ field }) => (
-              <FormItem className="w-full space-y-4">
-                <div className="w-full flex items-center justify-between">
-                  <FormLabel>Tech Stacks</FormLabel>
-                  <FormMessage className="text-sm" />
-                </div>
-                <FormControl>
-                  <Textarea
-                    className="h-12"
-                    disabled={loading}
-                    placeholder="eg:- React, Typescript..."
-                    {...field}
-                    value={field.value || ""}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          <div className="w-full flex items-center justify-end gap-6">
-            <Button
-              type="reset"
-              size={"sm"}
-              variant={"outline"}
-              disabled={isSubmitting || loading}
+      <Card className="border-blue-100 shadow-md overflow-hidden bg-white">
+        <CardHeader className="bg-gradient-to-r from-blue-50 to-white border-b border-blue-100 pb-4">
+          <Badge variant="outline" className="w-fit bg-blue-50 text-blue-700 border-blue-200 mb-2">
+            <BrainCircuit className="h-3 w-3 mr-1" /> AI-Powered
+          </Badge>
+          <CardTitle className="text-xl text-blue-900">Interview Details</CardTitle>
+          <CardDescription className="text-blue-700">
+            Provide details about the position to generate custom interview questions
+          </CardDescription>
+          
+          {initialData && (
+            <Button 
+              size="sm" 
+              variant="ghost" 
+              className="absolute top-4 right-4 hover:bg-red-50 hover:text-red-600"
             >
-              Reset
+              <Trash2 className="h-4 w-4 text-red-500 mr-1" />
+              <span className="text-sm">Delete</span>
             </Button>
-            <Button
-              type="submit"
-              size={"sm"}
-              disabled={isSubmitting || !isValid || loading}
+          )}
+        </CardHeader>
+        <CardContent className="p-6 space-y-6">
+          <FormProvider {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-full flex-col flex items-start justify-start gap-6"
             >
-              {loading ? (
-                <Loader className="text-gray-50 animate-spin" />
-              ) : (
-                actions
-              )}
-            </Button>
-          </div>
-        </form>
-      </FormProvider>
+              <FormField
+                control={form.control}
+                name="position"
+                render={({ field }) => (
+                  <FormItem className="w-full space-y-3">
+                    <div className="w-full flex items-center justify-between">
+                      <FormLabel className="text-blue-800 font-medium">Job Role / Position</FormLabel>
+                      <FormMessage className="text-sm" />
+                    </div>
+                    <FormControl>
+                      <Input
+                        className="h-12 border-blue-200 focus-visible:ring-blue-500"
+                        disabled={loading}
+                        placeholder="e.g., Full Stack Developer"
+                        {...field}
+                        value={field.value || ""}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem className="w-full space-y-3">
+                    <div className="w-full flex items-center justify-between">
+                      <FormLabel className="text-blue-800 font-medium">Job Description</FormLabel>
+                      <FormMessage className="text-sm" />
+                    </div>
+                    <FormControl>
+                      <Textarea
+                        className="min-h-32 border-blue-200 focus-visible:ring-blue-500"
+                        disabled={loading}
+                        placeholder="Describe the job role, responsibilities, and requirements"
+                        {...field}
+                        value={field.value || ""}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                <FormField
+                  control={form.control}
+                  name="experience"
+                  render={({ field }) => (
+                    <FormItem className="w-full space-y-3">
+                      <div className="w-full flex items-center justify-between">
+                        <FormLabel className="text-blue-800 font-medium">Years of Experience</FormLabel>
+                        <FormMessage className="text-sm" />
+                      </div>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          className="h-12 border-blue-200 focus-visible:ring-blue-500"
+                          disabled={loading}
+                          placeholder="e.g., 3"
+                          {...field}
+                          value={field.value || ""}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="techStack"
+                  render={({ field }) => (
+                    <FormItem className="w-full space-y-3">
+                      <div className="w-full flex items-center justify-between">
+                        <FormLabel className="text-blue-800 font-medium">Tech Stack</FormLabel>
+                        <FormMessage className="text-sm" />
+                      </div>
+                      <FormControl>
+                        <Input
+                          className="h-12 border-blue-200 focus-visible:ring-blue-500"
+                          disabled={loading}
+                          placeholder="e.g., React, TypeScript, Node.js"
+                          {...field}
+                          value={field.value || ""}
+                        />
+                      </FormControl>
+                      {!field.value && null}
+                      {field.value && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {field.value.split(',').map((tech, index) => (
+                            <Badge 
+                              key={index} 
+                              variant="outline" 
+                              className="bg-blue-50 text-blue-700 border-blue-200"
+                            >
+                              {tech.trim()}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className="w-full flex items-center justify-end gap-4 mt-4">
+                <Button
+                  type="reset"
+                  variant={"outline"}
+                  className="border-blue-300 text-blue-700 hover:bg-blue-50"
+                  disabled={isSubmitting || loading}
+                >
+                  Reset
+                </Button>
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-md hover:shadow-lg transition-all duration-200"
+                  disabled={isSubmitting || !isValid || loading}
+                >
+                  {loading ? (
+                    <div className="flex items-center gap-2">
+                      <Loader className="h-4 w-4 animate-spin" />
+                      <span>Generating...</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="h-4 w-4" />
+                      <span>{actions}</span>
+                    </div>
+                  )}
+                </Button>
+              </div>
+            </form>
+          </FormProvider>
+        </CardContent>
+      </Card>
     </div>
   );
 };
